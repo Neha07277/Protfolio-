@@ -15,7 +15,8 @@ export default function Contact() {
   async function handleSubmit(event) {
     event.preventDefault()
     setStatus('sending')
-    const data = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    const data = new FormData(form)
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
@@ -34,7 +35,7 @@ export default function Contact() {
         throw new Error(msg)
       }
       setStatus('sent')
-      event.currentTarget.reset()
+      form.reset()
     } catch (err) {
       setFormError(err?.message || 'Something went wrong.')
       setStatus('error')
