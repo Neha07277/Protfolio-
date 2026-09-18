@@ -1,0 +1,126 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #0b0b0f;
+  --color-surface: #12121a;
+  --color-surface-2: #171722;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-ink: #ededf2;
+  --color-muted: #9090a0;
+  --color-muted-2: #6f6f80;
+  --color-accent: #8a7cff;
+  --color-accent-2: #a99cff;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(138, 124, 255, 0.3);
+  color: #ffffff;
+}
+
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+::placeholder {
+  color: var(--color-muted);
+  opacity: 0.8;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #262633;
+  border-radius: 999px;
+  border: 2px solid var(--color-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #38384d;
+}
+
+/* Subtle developer grid pattern */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Gradient hero name */
+.text-gradient {
+  background: linear-gradient(120deg, #ffffff 0%, #d9d4ff 55%, #8a7cff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Shared card hover lift + glow */
+.card-hover {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.35s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(138, 124, 255, 0.45);
+  box-shadow:
+    0 18px 44px -20px rgba(138, 124, 255, 0.4),
+    0 0 0 1px rgba(138, 124, 255, 0.08);
+}
+
+/* Floating badges around the portrait */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+.animate-float-delay {
+  animation: float 7s ease-in-out 1.2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
