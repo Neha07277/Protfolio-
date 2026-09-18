@@ -10,6 +10,7 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xqpaayol'
 
 export default function Contact() {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const [formError, setFormError] = useState('')
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -21,10 +22,21 @@ export default function Contact() {
         body: data,
         headers: { Accept: 'application/json' },
       })
-      if (!res.ok) throw new Error(`Formspree returned ${res.status}`)
+      const text = await res.text()
+      if (!res.ok) {
+        let msg = `Formspree returned ${res.status}`
+        try {
+          const parsed = JSON.parse(text)
+          if (parsed?.errors?.length) msg = parsed.errors[0].message
+        } catch {
+          /* not JSON */
+        }
+        throw new Error(msg)
+      }
       setStatus('sent')
       event.currentTarget.reset()
-    } catch {
+    } catch (err) {
+      setFormError(err?.message || 'Something went wrong.')
       setStatus('error')
     }
   }
@@ -121,6 +133,8 @@ export default function Contact() {
           <Reveal delay={0.15}>
             <form
               onSubmit={handleSubmit}
+              action={FORMSPREE_ENDPOINT}
+              method="POST"
               className="card-hover rounded-lg border border-line bg-surface/80 p-6 backdrop-blur-sm md:p-8"
             >
               <div>
@@ -181,7 +195,7 @@ export default function Contact() {
               )}
               {status === 'error' && (
                 <p className="mt-4 text-sm text-red-400" role="alert">
-                  Something went wrong. Please try again or email me directly.
+                  {formError || 'Something went wrong. Please try again or email me directly.'}
                 </p>
               )}
             </form>
