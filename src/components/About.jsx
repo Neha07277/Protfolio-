@@ -1,21 +1,26 @@
-import { Compass, GraduationCap } from 'lucide-react'
+import { CheckCircle2, Compass, GraduationCap } from 'lucide-react'
 import { about } from '../data/portfolio'
 import Reveal from './Reveal'
 import SectionHeading from './SectionHeading'
 
 const sectionSubtitle =
-  'Software developer and technical project coordinator with hands-on experience across full-stack development and shipping production software.'
+  'Full-stack engineer and technical project coordinator bridging clean code with disciplined agile delivery.'
 
-function InfoCard({ icon: Icon, title, children, className = 'card-hover' }) {
+function InfoCard({ icon: Icon, title, children, accentColor = '#6366f1', className = '' }) {
   return (
     <div
-      className={`rounded-lg border border-line bg-surface p-6 transition-colors md:p-7 ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm transition-all duration-300 hover:border-accent hover:shadow-xl md:p-7 ${className}`}
     >
-      <div className="mb-4 flex items-center gap-2.5">
-        <span className="flex h-8 w-8 items-center justify-center rounded-md border border-accent/30 bg-accent/10 text-accent">
-          <Icon size={16} />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-12 -right-12 h-28 w-28 rounded-full blur-2xl opacity-20 transition-opacity duration-300 group-hover:opacity-50"
+        style={{ backgroundColor: accentColor }}
+      />
+      <div className="mb-4 flex items-center gap-3">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-accent/30 bg-accent/15 text-accent shadow-sm">
+          <Icon size={18} />
         </span>
-        <h3 className="font-display text-base font-semibold text-ink">{title}</h3>
+        <h3 className="font-display text-base font-bold text-ink">{title}</h3>
       </div>
       {children}
     </div>
@@ -24,37 +29,46 @@ function InfoCard({ icon: Icon, title, children, className = 'card-hover' }) {
 
 export default function About() {
   return (
-    <section id="about" className="relative border-t border-line/60 py-16 md:py-24">
+    <section id="about" className="relative border-t border-line py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-          {/* Left — intro */}
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          {/* Left Column: Story & Highlights */}
           <div>
-            <SectionHeading index="01" title="About" subtitle={sectionSubtitle} />
+            <SectionHeading index="01" title="About Me" subtitle={sectionSubtitle} />
 
-            <Reveal className="space-y-5 text-base leading-relaxed text-muted md:text-lg">
-              <p className="text-ink/90">{about.intro}</p>
-              <ul className="space-y-4">
+            <Reveal className="space-y-6 text-base leading-relaxed text-muted md:text-lg">
+              <p className="font-medium text-ink">
+                {about.intro}
+              </p>
+
+              <div className="space-y-4 pt-2">
                 {about.highlights.map((point) => (
-                  <li key={point} className="flex gap-3">
-                    <span className="mt-[0.55em] flex h-1.5 w-1.5 shrink-0">
-                      <span className="h-full w-full rounded-full bg-accent shadow-[0_0_8px_rgba(138,124,255,0.8)]" />
+                  <div key={point} className="flex items-start gap-3.5">
+                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                      <CheckCircle2 size={14} />
                     </span>
-                    <span>{point}</span>
-                  </li>
+                    <span className="text-sm md:text-base leading-relaxed text-muted">
+                      {point}
+                    </span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </Reveal>
           </div>
 
-          {/* Right — info cards */}
+          {/* Right Column: Key Accreditations & Philosophy */}
           <div className="space-y-6">
             <Reveal delay={0.1}>
-              <InfoCard icon={GraduationCap} title="Academic">
-                <ul className="space-y-3 text-sm text-muted">
+              <InfoCard
+                icon={GraduationCap}
+                title="Academic Excellence"
+                accentColor="#06b6d4"
+              >
+                <ul className="space-y-3.5 text-sm text-muted">
                   {about.education.map((line) => (
-                    <li key={line} className="flex gap-3">
-                      <span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-accent" />
-                      {line}
+                    <li key={line} className="flex items-center gap-3">
+                      <span className="h-2 w-2 shrink-0 rounded-full bg-cyan-500 shadow-[0_0_6px_#06b6d4]" />
+                      <span className="font-semibold text-ink">{line}</span>
                     </li>
                   ))}
                 </ul>
@@ -62,11 +76,13 @@ export default function About() {
             </Reveal>
 
             <Reveal delay={0.18}>
-              <InfoCard icon={Compass} title="Approach">
-                <p className="text-sm leading-relaxed text-muted-2">
-                  Comfortable moving between hands-on coding (MERN / PERN stacks)
-                  and coordinating developers — tracking deadlines, unblocking
-                  engineers, and keeping concurrent products on schedule.
+              <InfoCard
+                icon={Compass}
+                title="Engineering Philosophy"
+                accentColor="#a855f7"
+              >
+                <p className="text-sm leading-relaxed text-muted">
+                  I believe the most valuable engineers are those who understand both the code and the business context. My dual background in hands-on full-stack development and technical project coordination ensures every feature is built for performance, delivered on schedule, and aligned with client objectives.
                 </p>
               </InfoCard>
             </Reveal>
